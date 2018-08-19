@@ -89,11 +89,12 @@ class Packtpub(object):
         self.info['title'] = title
         self.info['filename'] = title.encode('ascii', 'ignore').replace(' ', '_')
         self.info['description'] = div_target.select('div.dotd-main-book-summary > div')[2].text.strip()
-        self.info['url_image'] = 'https:' + div_target.select('div.dotd-main-book-image img')[0]['data-original']
-        self.info['url_claim'] = self.__url_base + div_target.select('a.twelve-days-claim')[0]['href']
+        self.info['url_image'] = div_target.select('div.dotd-main-book-image img')[0]['src']
+        # self.info['url_claim'] = self.__url_base + div_target.select('form')[0]['action']
         # remove useless info
         self.info.pop('form_build_id', None)
         self.info.pop('form_id', None)
+        print self.info
 
     def __parseNewsletterBookInfo(self, soup):
         div_target = soup.find('div', {'id': 'main-book'})
@@ -160,8 +161,8 @@ class Packtpub(object):
         wait(self.__delay, self.__dev)
         self.__parseDailyBookInfo(soup)
         wait(self.__delay, self.__dev)
-        self.__GET_claim()
-        wait(self.__delay, self.__dev)
+        #self.__GET_claim()
+        #wait(self.__delay, self.__dev)
 
     def runNewsletter(self, currentNewsletterUrl):
         """

@@ -3,7 +3,9 @@ from notification.ifttt import Ifttt
 from logs import *
 from notification.join import Join
 from notification.mypushover import Pushover
+from notification.myemail import Myemail
 
+SERVICE_EMAIL = 'email'
 SERVICE_GMAIL = 'gmail'
 SERVICE_IFTTT = 'ifttt'
 SERVICE_JOIN = 'join'
@@ -19,6 +21,8 @@ class Notify(object):
         self.info = {
             'details': []
         }
+        if service_type == SERVICE_EMAIL:
+            self.service = Myemail(config, packpub_info, upload_info)
         if service_type == SERVICE_GMAIL:
             self.service = Gmail(config, packpub_info, upload_info)
         elif service_type == SERVICE_IFTTT:
